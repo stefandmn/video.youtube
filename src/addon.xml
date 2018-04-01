@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="video.youtube" version="1.2.4" name="YouTube" provider-name="AMSD">
+	<requires>
+		<import addon="xbmc.python" version="2.20.0"/>
+		<import addon="module.clue" version="1.0.1"/>
+		<import addon="module.bs4" version="1.0.1"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">YouTube Video Plugin</summary>
+		<description lang="en">This plugin lets you browse and play videos and related resources from YouTube.com</description>
+	</extension>
+</addon>

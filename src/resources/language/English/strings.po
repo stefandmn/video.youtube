@@ -1,0 +1,166 @@
+# MCPi language file
+# Addon Name: YouTube
+# Addon id: video.youtube
+# Addon Provider: AMSD
+msgid ""
+msgstr ""
+"Project-Id-Version: YouTube\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Plugin for YouTube"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "YouTube is a one of the biggest video-sharing websites of the world."
+msgstr ""
+
+
+# Shared labels used for modshell library (309xx - 30999)
+
+msgctxt "#30901"
+msgid "Favorites"
+msgstr ""
+
+msgctxt "#30902"
+msgid "Watch Later"
+msgstr ""
+
+msgctxt "#30903"
+msgid "Search"
+msgstr ""
+
+msgctxt "#30904"
+msgid "Remove"
+msgstr ""
+
+msgctxt "#30905"
+msgid "Rename"
+msgstr ""
+
+msgctxt "#30906"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#30907"
+msgid "Next Page (%d)"
+msgstr ""
+
+msgctxt "#30909"
+msgid "New Search"
+msgstr ""
+
+msgctxt "#30910"
+msgid "Confirm delete"
+msgstr ""
+
+msgctxt "#30911"
+msgid "Confirm remove"
+msgstr ""
+
+msgctxt "#30912"
+msgid "Delete \"%s\"?"
+msgstr ""
+
+msgctxt "#30913"
+msgid "Remove \"%s\"?"
+msgstr ""
+
+
+# Specific label for this addon implementation
+
+msgctxt "#30001"
+msgid "Trending"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Channels"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Search"
+msgstr ""
+
+msgctxt "#30110"
+msgid "Content"
+msgstr ""
+
+msgctxt "#30111"
+msgid "Show Fanart"
+msgstr ""
+
+msgctxt "#30112"
+msgid "Items per page"
+msgstr ""
+
+msgctxt "#30113"
+msgid "Search history"
+msgstr ""
+
+msgctxt "#30114"
+msgid "Cache size (MB)"
+msgstr ""
+
+msgctxt "#30120"
+msgid "YouTube"
+msgstr ""
+
+msgctxt "#30121"
+msgid "API key"
+msgstr ""
+
+msgctxt "#30122"
+msgid "Video quality"
+msgstr ""
+
+msgctxt "#30123"
+msgid "best"
+msgstr ""
+
+msgctxt "#30124"
+msgid "worst"
+msgstr ""
+
+msgctxt "#30125"
+msgid "Use HTTP instead of HTTPS to retrieve data"
+msgstr ""
+
+msgctxt "#30126"
+msgid "Suppress HTTPS certificate validation"
+msgstr ""
+
+msgctxt "#30127"
+msgid "Region"
+msgstr ""
+
+msgctxt "#30130"
+msgid "Channels"
+msgstr ""
+
+msgctxt "#30131"
+msgid "Number of channels"
+msgstr ""
+
+msgctxt "#30132"
+msgid "Channel 1 URL"
+msgstr ""
+
+msgctxt "#30133"
+msgid "Channel 2 URL"
+msgstr ""
+
+msgctxt "#30134"
+msgid "Channel 3 URL"
+msgstr ""
+
+msgctxt "#30135"
+msgid "Channel 4 URL"
+msgstr ""
+
+msgctxt "#30136"
+msgid "Channel 5 URL"
+msgstr ""

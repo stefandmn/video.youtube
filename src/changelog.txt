@@ -1,0 +1,24 @@
+v1.2
+- Implementation of 'search' procedure over HTML output (without API key)
+- Fix for YouTube_DL: remove all isatty() method reference from all library files
+- Fix for YouTube_DL: replace ValueError with StandardError to lines 1184 and 1191
+  in youtube_dl/utils.py library
+- Implementation of 'trending' public listing over HTML output (without API key)
+- New implementation using relaying on youtube-dl package as backend library
+- Drop existing implementation and new design has been developed
+
+v1.1
+- Rename it in video.youtube
+- Set predefined google cloud keys
+- Move 'mediadir' namespace to service.clue plugin
+- Refactor and reformat the entire plugin and build Clue plugin framework
+- Remove all old dependencies and share functionalities from service.clue
+- Create a new plugin fork from version 5.3.12
+
+v1.0
+- Addon icon has been changed (rebranding)
+- XML localization files have been converted in po files
+- Main YouTube libraries have been moved and integrated with StorageServer and
+  CommonFunctions from service.clue add-on.
+- Reorganize the source code, aggregating components and libraries.
+- Inherit add-on functions from original plugin.video.youtube v4.4.10
