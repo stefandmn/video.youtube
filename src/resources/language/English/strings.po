@@ -74,7 +74,7 @@ msgstr ""
 # Specific label for this addon implementation
 
 msgctxt "#30001"
-msgid "Trending"
+msgid "Most Popular"
 msgstr ""
 
 msgctxt "#30002"
@@ -110,23 +110,23 @@ msgid "YouTube"
 msgstr ""
 
 msgctxt "#30121"
-msgid "API key"
+msgid "Use key"
 msgstr ""
 
 msgctxt "#30122"
-msgid "Video quality"
+msgid "API key"
 msgstr ""
 
 msgctxt "#30123"
-msgid "best"
+msgid "Video quality"
 msgstr ""
 
 msgctxt "#30124"
-msgid "worst"
+msgid "best"
 msgstr ""
 
 msgctxt "#30125"
-msgid "Use HTTP instead of HTTPS to retrieve data"
+msgid "worst"
 msgstr ""
 
 msgctxt "#30126"
@@ -134,7 +134,7 @@ msgid "Suppress HTTPS certificate validation"
 msgstr ""
 
 msgctxt "#30127"
-msgid "Region"
+msgid "Video content available in the region"
 msgstr ""
 
 msgctxt "#30130"

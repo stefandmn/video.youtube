@@ -47,10 +47,9 @@ class Provider(modshell.AbstractProvider):
 			if video["type"] == "video":
 				item = VideoItem(video["title"], context.createUri(['play'], {'video_id': video["id"]}), image=video["thumb"], fanart=video["thumb"])
 			elif video["type"] == "channel":
-				item = DirectoryItem(name=video["title"], uri=context.createUri(['channel'], {'channel_id': video['id']}), image=video["thumb"], fanart=video["thumb"])
+				item = DirectoryItem(name=video["title"], uri=context.createUri(['channel'], {'channel_id': video['id']}), image=context.createResourcePath('media', 'channel.png'), fanart=video["thumb"])
 			elif video["type"] == "playlist":
-				# ToDo - playlist content listing implementation
-				pass
+				item = DirectoryItem(name=video["title"], uri=context.createUri(['playlist'], {'playlist_id': video['id']}), image=context.createResourcePath('media', 'playlist.png'), fanart=video["thumb"])
 			if video is not None:
 				result.append(item)
 		if end < len(jsondata):
@@ -103,7 +102,7 @@ class Provider(modshell.AbstractProvider):
 	def _channel_videos(self, context, re_match):
 		result = []
 		cid = context.getParam('channel_id')
-		jsondata = context.getFunctionCache().get(FunctionCache.ONE_HOUR, wrapper.get_channel, context, cid)
+		jsondata = context.getFunctionCache().get(FunctionCache.ONE_HOUR, wrapper.get_channel_videos, context, cid)
 		page = int(context.getParam('page', 1))
 		start = (page - 1) * context.getSettings().getPageSize()
 		end = min(start + context.getSettings().getPageSize(), len(jsondata))
@@ -116,5 +115,17 @@ class Provider(modshell.AbstractProvider):
 		return result
 
 	@modshell.RegisterProviderPath('^/playlist/$')
-	def _playlist(self, context, re_match):
-		pass
+	def _playlist_videos(self, context, re_match):
+		result = []
+		pid = context.getParam('playlist_id')
+		jsondata = context.getFunctionCache().get(FunctionCache.ONE_HOUR, wrapper.get_playlist_videos, context, pid)
+		page = int(context.getParam('page', 1))
+		start = (page - 1) * context.getSettings().getPageSize()
+		end = min(start + context.getSettings().getPageSize(), len(jsondata))
+		for video in jsondata[start:end]:
+			item = VideoItem(video["title"], context.createUri(['play'], {'video_id': video["id"]}), image=video["thumb"], fanart=video["thumb"])
+			result.append(item)
+		if end < len(jsondata):
+			item = NextPageItem(context, page, fanart=self.getFanart(context))
+			result.append(item)
+		return result

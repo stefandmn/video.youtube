@@ -1,4 +1,6 @@
 v1.2
+- Implementation of playlist content through API and HTML
+- Implementation of 'trending', 'channels', and 'search' procedures over API.
 - Implementation of 'search' procedure over HTML output (without API key)
 - Fix for YouTube_DL: remove all isatty() method reference from all library files
 - Fix for YouTube_DL: replace ValueError with StandardError to lines 1184 and 1191
