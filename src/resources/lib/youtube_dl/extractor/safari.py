@@ -15,10 +15,10 @@ from ..utils import (
 
 
 class SafariBaseIE(InfoExtractor):
-    _LOGIN_URL = 'https://www.safaribooksonline.com/accounts/login/'
+    _LOGIN_URL = 'https://learning.oreilly.com/accounts/login/'
     _NETRC_MACHINE = 'safari'
 
-    _API_BASE = 'https://www.safaribooksonline.com/api/v1'
+    _API_BASE = 'https://learning.oreilly.com/api/v1'
     _API_FORMAT = 'json'
 
     LOGGED_IN = False
@@ -27,7 +27,7 @@ class SafariBaseIE(InfoExtractor):
         self._login()
 
     def _login(self):
-        (username, password) = self._get_login_info()
+        username, password = self._get_login_info()
         if username is None:
             return
 
@@ -74,7 +74,14 @@ class SafariBaseIE(InfoExtractor):
 class SafariIE(SafariBaseIE):
     IE_NAME = 'safari'
     IE_DESC = 'safaribooksonline.com online video'
-    _VALID_URL = r'https?://(?:www\.)?safaribooksonline\.com/library/view/[^/]+/(?P<course_id>[^/]+)/(?P<part>[^/?#&]+)\.html'
+    _VALID_URL = r'''(?x)
+                        https?://
+                            (?:www\.)?(?:safaribooksonline|learning\.oreilly)\.com/
+                            (?:
+                                library/view/[^/]+/(?P<course_id>[^/]+)/(?P<part>[^/?\#&]+)\.html|
+                                videos/[^/]+/[^/]+/(?P<reference_id>[^-]+-[^/?\#&]+)
+                            )
+                    '''
 
     _TESTS = [{
         'url': 'https://www.safaribooksonline.com/library/view/hadoop-fundamentals-livelessons/9780133392838/part00.html',
@@ -94,22 +101,44 @@ class SafariIE(SafariBaseIE):
     }, {
         'url': 'https://www.safaribooksonline.com/library/view/learning-path-red/9780134664057/RHCE_Introduction.html',
         'only_matching': True,
+    }, {
+        'url': 'https://www.safaribooksonline.com/videos/python-programming-language/9780134217314/9780134217314-PYMC_13_00',
+        'only_matching': True,
+    }, {
+        'url': 'https://learning.oreilly.com/videos/hadoop-fundamentals-livelessons/9780133392838/9780133392838-00_SeriesIntro',
+        'only_matching': True,
     }]
+
+    _PARTNER_ID = '1926081'
+    _UICONF_ID = '29375172'
 
     def _real_extract(self, url):
         mobj = re.match(self._VALID_URL, url)
-        video_id = '%s/%s' % (mobj.group('course_id'), mobj.group('part'))
 
-        webpage = self._download_webpage(url, video_id)
-        reference_id = self._search_regex(
-            r'data-reference-id=(["\'])(?P<id>(?:(?!\1).)+)\1',
-            webpage, 'kaltura reference id', group='id')
-        partner_id = self._search_regex(
-            r'data-partner-id=(["\'])(?P<id>(?:(?!\1).)+)\1',
-            webpage, 'kaltura widget id', group='id')
-        ui_id = self._search_regex(
-            r'data-ui-id=(["\'])(?P<id>(?:(?!\1).)+)\1',
-            webpage, 'kaltura uiconf id', group='id')
+        reference_id = mobj.group('reference_id')
+        if reference_id:
+            video_id = reference_id
+            partner_id = self._PARTNER_ID
+            ui_id = self._UICONF_ID
+        else:
+            video_id = '%s-%s' % (mobj.group('course_id'), mobj.group('part'))
+
+            webpage, urlh = self._download_webpage_handle(url, video_id)
+
+            mobj = re.match(self._VALID_URL, urlh.geturl())
+            reference_id = mobj.group('reference_id')
+            if not reference_id:
+                reference_id = self._search_regex(
+                    r'data-reference-id=(["\'])(?P<id>(?:(?!\1).)+)\1',
+                    webpage, 'kaltura reference id', group='id')
+            partner_id = self._search_regex(
+                r'data-partner-id=(["\'])(?P<id>(?:(?!\1).)+)\1',
+                webpage, 'kaltura widget id', default=self._PARTNER_ID,
+                group='id')
+            ui_id = self._search_regex(
+                r'data-ui-id=(["\'])(?P<id>(?:(?!\1).)+)\1',
+                webpage, 'kaltura uiconf id', default=self._UICONF_ID,
+                group='id')
 
         query = {
             'wid': '_%s' % partner_id,
@@ -134,7 +163,7 @@ class SafariIE(SafariBaseIE):
 
 class SafariApiIE(SafariBaseIE):
     IE_NAME = 'safari:api'
-    _VALID_URL = r'https?://(?:www\.)?safaribooksonline\.com/api/v1/book/(?P<course_id>[^/]+)/chapter(?:-content)?/(?P<part>[^/?#&]+)\.html'
+    _VALID_URL = r'https?://(?:www\.)?(?:safaribooksonline|learning\.oreilly)\.com/api/v1/book/(?P<course_id>[^/]+)/chapter(?:-content)?/(?P<part>[^/?#&]+)\.html'
 
     _TESTS = [{
         'url': 'https://www.safaribooksonline.com/api/v1/book/9780133392838/chapter/part00.html',
@@ -159,10 +188,15 @@ class SafariCourseIE(SafariBaseIE):
     _VALID_URL = r'''(?x)
                     https?://
                         (?:
-                            (?:www\.)?safaribooksonline\.com/(?:library/view/[^/]+|api/v1/book)|
+                            (?:www\.)?(?:safaribooksonline|learning\.oreilly)\.com/
+                            (?:
+                                library/view/[^/]+|
+                                api/v1/book|
+                                videos/[^/]+
+                            )|
                             techbus\.safaribooksonline\.com
                         )
-                        /(?P<id>[^/]+)/?(?:[#?]|$)
+                        /(?P<id>[^/]+)
                     '''
 
     _TESTS = [{
@@ -179,7 +213,18 @@ class SafariCourseIE(SafariBaseIE):
     }, {
         'url': 'http://techbus.safaribooksonline.com/9780134426365',
         'only_matching': True,
+    }, {
+        'url': 'https://www.safaribooksonline.com/videos/python-programming-language/9780134217314',
+        'only_matching': True,
+    }, {
+        'url': 'https://learning.oreilly.com/videos/hadoop-fundamentals-livelessons/9780133392838',
+        'only_matching': True,
     }]
+
+    @classmethod
+    def suitable(cls, url):
+        return (False if SafariIE.suitable(url) or SafariApiIE.suitable(url)
+                else super(SafariCourseIE, cls).suitable(url))
 
     def _real_extract(self, url):
         course_id = self._match_id(url)

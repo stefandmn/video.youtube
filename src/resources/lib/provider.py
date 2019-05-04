@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import wrapper
-import commons
 import modshell
 from modshell.utils.FunctionCache import FunctionCache
 from modshell.items.DirectoryItem import DirectoryItem
@@ -15,7 +13,6 @@ class Provider(modshell.AbstractProvider):
 
 	def __init__(self):
 		modshell.AbstractProvider.__init__(self)
-		pass
 
 	def getAlternativeFanart(self, context):
 		return self.getFanart(context)
