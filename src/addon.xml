@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="video.youtube" version="1.4.5" name="YouTube" provider-name="AMSD">
+<addon id="video.youtube" version="1.4.7" name="YouTube" provider-name="AMSD">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="module.clue" version="1.4.1"/>

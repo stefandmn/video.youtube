@@ -2,7 +2,7 @@ v1.4
 - Change icons to be in correlation with Clue graphical style
 - Upgrade YouTube_DL library to version 2018.12.09 and related fixes:
 	- remove all isatty() method references from all library files
-	- replace ValueError with StandardError to lines 1122 and 1129 in utils.py
+	- (optional) replace ValueError with StandardError to lines 1122 and 1129 in utils.py
 - Implementation of playlist content through API and HTML
 - Implementation of 'trending', 'channels', and 'search' procedures over API.
 - Implementation of 'search' procedure over HTML output (without API key)
