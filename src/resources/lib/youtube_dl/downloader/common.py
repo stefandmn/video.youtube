@@ -176,7 +176,9 @@ class FileDownloader(object):
             return
         speed = float(byte_counter) / elapsed
         if speed > rate_limit:
-            time.sleep(max((byte_counter // rate_limit) - elapsed, 0))
+            sleep_time = float(byte_counter) / rate_limit - elapsed
+            if sleep_time > 0:
+                time.sleep(sleep_time)
 
     def temp_name(self, filename):
         """Returns a temporary filename for the given filename."""
@@ -239,7 +241,7 @@ class FileDownloader(object):
                 self._report_progress_prev_line_length = len(fullmsg)
                 clear_line = '\r'
             else:
-                clear_line = '\r'
+                clear_line = ('\r\x1b[K' if sys.stderr.isatty() else '\r')
             self.to_screen(clear_line + fullmsg, skip_eol=not is_last_line)
         self.to_console_title('youtube-dl ' + msg)
 
@@ -330,15 +332,15 @@ class FileDownloader(object):
         """
 
         nooverwrites_and_exists = (
-            self.params.get('nooverwrites', False) and
-            os.path.exists(encodeFilename(filename))
+            self.params.get('nooverwrites', False)
+            and os.path.exists(encodeFilename(filename))
         )
 
         if not hasattr(filename, 'write'):
             continuedl_and_exists = (
-                self.params.get('continuedl', True) and
-                os.path.isfile(encodeFilename(filename)) and
-                not self.params.get('nopart', False)
+                self.params.get('continuedl', True)
+                and os.path.isfile(encodeFilename(filename))
+                and not self.params.get('nopart', False)
             )
 
             # Check file already present
